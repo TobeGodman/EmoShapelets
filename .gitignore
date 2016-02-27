@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+# Matlab
+*.m~
+*.mex*
+*.mat
+
+# other
+*.csv
+*.txt
