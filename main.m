@@ -2,7 +2,7 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
 
     % read input file
     fprintf('\n########### read data ###########\n\n')
-    fprintf('..reading input data\n')
+    fprintf('..reading input data: %s\n', dataInputFile)
     data_full = csvread(['data/', dataInputFile, '.csv']);
     data_speakerIdx = data_full(:,1);
     data_frameIdx = data_full(:,2);
@@ -63,17 +63,12 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
 
         % ------------------------------------------------------------------------
         % print Emotogram stats
-        % ------------------------------------------------------------------------
+        % ------------------------------------------------------------------------        
         fprintf('..train Emotogram stats\n')
-        printSequencesStats(train_emoto_struct.signals)
-
+        printSequencesStats(train_emoto_struct.signals);
 
         fprintf('..test Emotogram stats\n')
-
-
-        
-        keyboard
-
+        printSequencesStats(test_emoto_struct.signals);
 
         % ------------------------------------------------------------------------
         % Shapelet generation
@@ -92,8 +87,20 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
         % ------------------------------------------------------------------------
         % print shapelet stats
         % ------------------------------------------------------------------------
+        numChannels = numel(train_shape_struct.shapelets);
+        for j=1:numChannels
+            fprintf('..train shapelet stats (channel %d, %d)\n', j, numChannels)
+            printSequencesStats(train_shape_struct.shapelets{j});
+        end
+        fprintf('...train shapelet stats (all)\n')
+        printSequencesStats(vertcat(train_shape_struct.shapelets{:}));
 
-
+        for j=1:numChannels
+            fprintf('..test shapelet stats (channel %d, %d)\n', j, numChannels)
+            printSequencesStats(test_shape_struct.shapelets{j});
+        end
+        fprintf('...test shapelet stats (all)\n')
+        printSequencesStats(vertcat(test_shape_struct.shapelets{:}))
 
         % ------------------------------------------------------------------------
         % save data
@@ -105,10 +112,5 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
         speakers_out{i}.train_shape_struct = train_shape_struct;
         speakers_out{i}.test_shape_struct = test_shape_struct;
     end
-
-    % ------------------------------------------------------------------------
-    % get results
-    % ------------------------------------------------------------------------
-    fprintf('### classifying ###\n')
 
 end

@@ -21,7 +21,7 @@ function [train_emoto_struct, test_emoto_struct] = generateEmotograms(train_raw_
     test_scores = zeros(numel(test_raw_struct.frameLabels), numel(uniqueLabels));
 
     for i=1:numUniqueLabels
-        fprintf('..getting emotogram label %d/%d \n', i, numUniqueLabels)
+        fprintf('..getting Emotogram label %d/%d \n', i, numUniqueLabels)
         currLabel = uniqueLabels(i);
 
         % transform labels to +1/-1

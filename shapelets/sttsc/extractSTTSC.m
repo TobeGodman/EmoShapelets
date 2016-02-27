@@ -8,24 +8,29 @@ kshapelets = repmat(struct('signal', 0, 'src', 0, ...
 
 % for all time series
 for i=1:numSequences
-    fprintf('....servicing sequence: %d/%d\n', i, numSequences);
+    if ~mod(i,100)
+        fprintf('....servicing sequence: %d/%d\n', i, numSequences);
+    end
 
     currSequence = signals{i};
-    currSequenceLen = length(currSequence);
 
-    % initialize for worst case
-    worstCaseN = currSequenceLen*currSequenceLen;     
-    shapelets = repmat(struct('signal', 0, 'src', 0, ...
-        'startIdx', 0, 'endIdx', 0, 'quality', 0), 1, worstCaseN);    
-    idx = 1;
+    % initialize shapelets
+    shapeLengths = minLen:maxLen;
+    numShapeLengths = numel(minLen:maxLen);
+    shapelets = cell(numShapeLengths,1);
 
-    for l=minLen:maxLen
+    parfor l=1:numShapeLengths
+
+        currShapeLength = shapeLengths(l);
 
         % generate candidates
-        [allCandidates, idxSt, idxEn] = generateCandidates(currSequence, l);
+        [allCandidates, idxSt, idxEn] = generateCandidates(currSequence, currShapeLength);
         if isempty(allCandidates)
             continue;
         end
+
+        shapeletsTemp = repmat(struct('signal', 0, 'src', 0, ...
+        'startIdx', 0, 'endIdx', 0, 'quality', 0), 1, size(allCandidates,1));
 
         % for each candidate
         for j=1:size(allCandidates,1)
@@ -34,17 +39,20 @@ for i=1:numSequences
             currDistances = findDistances(currCandidate, signals);            
             currQuality = assessCandidate(currDistances, labels);
 
-            shapelets(idx).signal = currCandidate;
-            shapelets(idx).src = i;
-            shapelets(idx).startIdx = idxSt(j);
-            shapelets(idx).endIdx = idxEn(j);
-            shapelets(idx).quality = currQuality;
-            idx = idx + 1;
+            shapeletsTemp(j).signal = currCandidate;
+            shapeletsTemp(j).src = i;
+            shapeletsTemp(j).startIdx = idxSt(j);
+            shapeletsTemp(j).endIdx = idxEn(j);
+            shapeletsTemp(j).quality = currQuality;            
         end
+
+        shapelets{l} = shapeletsTemp;
     end
-    
+
     % remove extra allocations
-    shapelets(idx:end) = [];
+    idx = cellfun(@isempty,shapelets);
+    shapelets(idx) = [];
+    shapelets = [shapelets{:}];
 
     % sort shapelets by quality
     qualities = [shapelets(:).quality];
