@@ -1,6 +1,6 @@
 % start parallel pool
-% NP = str2num(getenv('PBS_NP'));
-% myPool = parpool('current', NP);
+NP = str2num(getenv('PBS_NP'));
+myPool = parpool('current', NP);
 
 % add current directory to paths
 p = genpath(pwd); addpath(p);
