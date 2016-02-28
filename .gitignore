@@ -29,7 +29,7 @@
 
 # Matlab
 *.m~
-*.mex*
+#*.mex*
 *.mat
 
 # other
