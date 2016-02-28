@@ -1,7 +1,4 @@
-function [Xtr_out, Xte_out] = reduceDim(Xtr, Ytr, srcTr, Xte)
-
-% define number of feats
-numFeats = 100;
+function [Xtr_out, Xte_out] = reduceDim(Xtr, Ytr, Xte, numFeats)
 
 % first discretize
 XtrMean = mean(Xtr);

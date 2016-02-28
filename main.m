@@ -50,7 +50,6 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
         % Emotogram generation
         % ------------------------------------------------------------------------        
         fprintf('\n########### generating Emotograms (speaker %d/%d) ###########\n\n', i, numSpeakers)
-
         save_file = sprintf([dataInputFile, '_', notes, '_emoto%s_emotoTestSpkr%d.mat'], emotogramFunName, i);
         try
             load(['temp/' save_file]);

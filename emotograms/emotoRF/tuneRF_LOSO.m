@@ -4,7 +4,7 @@ function [hyperParams, models] = tuneRF_LOSO(Xtr, Ytr, SrcTr)
     [~, dim] = size(Xtr);
 
     % define hyper-parameters to be searched
-    mtry_grid = [floor(sqrt(dim)), floor(dim/10):floor(dim/10):floor(dim/3)];
+    mtry_grid = [floor(sqrt(dim)), floor(dim/10):floor(dim/10):floor(dim/2)];
 
     % get number of speakers
     uniqueSpkrIDs = unique(SrcTr);

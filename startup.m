@@ -1,8 +1,6 @@
 function startup()
-    
     % add current directory to paths
     p = genpath(pwd); addpath(p);
-    ORIG_PATH = path;
 
     % create folders
     mkdir_fun('data');
