@@ -54,6 +54,10 @@ for i=1:numSequences
     shapelets(idx) = [];
     shapelets = [shapelets{:}];
 
+    if isempty(shapelets)
+        continue;
+    end
+
     % sort shapelets by quality
     qualities = [shapelets(:).quality];
     [~, sortIdx] = sort(qualities, 'descend');
