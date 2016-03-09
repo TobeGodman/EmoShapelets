@@ -62,7 +62,7 @@ function speakers_out = main(dataInputFile, emotogramFunName, notes)
 
         % ------------------------------------------------------------------------
         % print Emotogram stats
-        % ------------------------------------------------------------------------        
+        % ------------------------------------------------------------------------
         fprintf('..train Emotogram stats\n')
         printSequencesStats(train_emoto_struct.signals);
 

@@ -45,7 +45,7 @@ function results = classifySpeakers(speakers_in, file_name)
         Yte2 = currSpeaker.test_shape_struct.labels;
 
         % dimensionality reduction
-        dim = size(Xtr1,2);        
+        dim = 200;
         [Xtr2, Xte2] = reduceDim(Xtr2, Ytr2, Xte2, dim);
 
         % scale data
@@ -71,7 +71,7 @@ function results = classifySpeakers(speakers_in, file_name)
 
         % tune, train, and test SVM
         params = tuneSVM_LOSO(Xtr3, Ytr2, IDtr2);
-        model = trainSVM(Xtr3, Ytr2, params, 0);        
+        model = trainSVM(Xtr3, Ytr2, params, 0);
         [uar, ~] = testSVM(Xte3, Yte2, model, 0);
 
         % put into method results

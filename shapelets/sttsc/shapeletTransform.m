@@ -21,17 +21,12 @@ function X_out = shapeletTransform(TS_in, shapelets)
 
 		% for each channel
 		for i=1:numChannels
-			currSequence = TS_in{j}(i,:);			
+			currSequence = TS_in{j}(i,:);
 
 			% for each shapelet
 			for k=1:length(shapelets{i})
-
 				currShapelet = shapelets{i}{k};
-				if length(currShapelet)<=length(currSequence)
-					[X_out(j,idx), ~] = UCR_DTW_matlab(currSequence, currShapelet, 0.05);
-				else
-					[X_out(j,idx), ~] = UCR_DTW_matlab(currShapelet, currSequence, 0.05);
-				end
+				[X_out(j,idx), ~] = UCR_DTW_matlab(currSequence, currShapelet, 0.05);
 				idx = idx + 1;
 			end
 		end

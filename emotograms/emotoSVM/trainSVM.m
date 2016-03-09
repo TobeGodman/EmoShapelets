@@ -4,11 +4,13 @@ function model = trainSVM(Xtr, Ytr, params, prob_model)
     % higher weight --> more emphasis
     % Cp1 = sum(Ytr==-1)/numel(Ytr);
     % Cn1 = sum(Ytr==1)/numel(Ytr);
-    Cp1 = 1;
-    Cn1 = 1;
+    % Cp1 = 1;
+    % Cn1 = 1;
 
-    options = sprintf('-c %0.10f -g %0.10f -b %d -q -w1 %0.1f -w-1 %0.1f', ...
-                            params.C, params.gamma, prob_model, Cp1, Cn1);
+    % options = sprintf('-c %0.10f -g %0.10f -b %d -q -w1 %0.1f -w-1 %0.1f', ...
+    %                         params.C, params.gamma, prob_model, Cp1, Cn1);
+    options = sprintf('-c %0.10f -g %0.10f -b %d -q', ...
+                            params.C, params.gamma, prob_model);
     model = svmtrain(Ytr, Xtr, options);
 
 end

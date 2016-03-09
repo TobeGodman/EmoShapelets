@@ -19,7 +19,7 @@ for i=1:numSequences
     numShapeLengths = numel(minLen:maxLen);
     shapelets = cell(numShapeLengths,1);
 
-    parfor l=1:numShapeLengths
+    parfor l=1:numShapeLengths        
 
         currShapeLength = shapeLengths(l);
 
@@ -36,14 +36,14 @@ for i=1:numSequences
         for j=1:size(allCandidates,1)
 
             currCandidate = allCandidates(j,:);
-            currDistances = findDistances(currCandidate, signals);            
+            currDistances = findDistances(currCandidate, signals);
             currQuality = assessCandidate(currDistances, labels);
 
             shapeletsTemp(j).signal = currCandidate;
             shapeletsTemp(j).src = i;
             shapeletsTemp(j).startIdx = idxSt(j);
             shapeletsTemp(j).endIdx = idxEn(j);
-            shapeletsTemp(j).quality = currQuality;            
+            shapeletsTemp(j).quality = currQuality;
         end
 
         shapelets{l} = shapeletsTemp;

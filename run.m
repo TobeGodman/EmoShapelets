@@ -1,11 +1,11 @@
-clc; startup;
+clc; clear all; startup;
 
 % start parallel pool
 % NP = str2num(getenv('PBS_NP'));
 % myPool = parpool('current', NP);
 % start parallel pool
-% myCluster = parcluster('local');
-% myCluster.NumWorkers = 12;
+myCluster = parcluster('local');
+myCluster.NumWorkers = 12;
 % parpool;
 
 % define input values
@@ -22,6 +22,9 @@ diary on
 
 % call main function
 speakers = main(dataInputFile, emotogramFunName, notes);
+
+% save statistics figures
+% saveFigs(speakers);
 
 % call classification code
 results = classifySpeakers(speakers, file_name);
